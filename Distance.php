@@ -1,5 +1,5 @@
 <?php
-namespace Beer\Distance;
+namespace Beer;
 
 class Distance
 {
@@ -72,11 +72,11 @@ class Distance
                 $unit
             );
             // add distance
-            $distances['distance'] = $key;
+            $distances[$distance] = $key;
             // add rounded distance to array
             $items[$key]['distance'] = round($distance, $decimals);
         }
         // return the item with the closest distance
-        return $items[$distances[min(array_keys($distances))]];
+        return $items[$distances[min(array_diff(array_map('floatval',array_keys($distances)), array(0)))]];
     }
 }

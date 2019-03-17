@@ -40,3 +40,4 @@ function selectFromBreweries($conn)
     }
     return $breweries;
 }
+
