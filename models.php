@@ -41,3 +41,16 @@ function selectFromBreweries($conn)
     return $breweries;
 }
 
+function selectFromBeers($conn)
+{
+    $sql = "SELECT * FROM beers";
+    $result = $conn->query($sql);
+    $breweries = array();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $beers[] = $row;
+        }
+    }
+    return $beers;
+}
+

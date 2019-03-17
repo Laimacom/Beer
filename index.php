@@ -29,6 +29,18 @@ if (isset($_POST['lat1'])) {
             echo 'First Brewery is ' . $name . '. Distance ' . $distance1 . 'km';
         }
     }
+    echo '<br>';
+    echo 'Beers found: ';
+    $beers = selectFromBeers($conn);
+    foreach ($beers as $key => $beer) {
+        //$name = [];
+        if ($id1 == $beer['brewery_id']) {
+            $name = $beer['name'];
+            echo $name . ', ';
+        }
+
+    }
+
 
     $secondBrewery = Distance::getClosest($lat1st, $lon1st, $items, $decimals = 1, $unit = 'km');
     echo '<br>';
