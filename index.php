@@ -14,7 +14,7 @@ if (isset($_POST['lat1'])) {
     echo 'Home is ' . $lat1 . " " . $lon1;
     echo '<br>';
 
-//var_dump(Distance::getClosest($lat1, $lon1, $items, $decimals = 1, $unit = 'km'));
+    //var_dump(Distance::getClosest($lat1, $lon1, $items, $decimals = 1, $unit = 'km'));
     $firstBrewery = Distance::getClosest($lat1, $lon1, $items, $decimals = 1, $unit = 'km');
     $id1 = $firstBrewery['brewery_id'];
     $distance1 = $firstBrewery['distance'];
@@ -23,54 +23,33 @@ if (isset($_POST['lat1'])) {
 
     $breweries = selectFromBreweries($conn);
 
-    foreach ($breweries as $key => $brewery) {
-        $name = $brewery ['name'];
-        if ($id1 == $brewery['id']) {
-            echo 'First Brewery is ' . $name . '. Distance ' . $distance1 . 'km';
-        }
-    }
-    echo '<br>';
-    echo 'Beers found: ';
-    $beers = selectFromBeers($conn);
-    foreach ($beers as $key => $beer) {
-        //$name = [];
-        if ($id1 == $beer['brewery_id']) {
-            $name = $beer['name'];
-            echo $name . ', ';
-        }
+    breweries($breweries, $id1, $number = 'First', $distance1);
 
-    }
-
+    beersFound($id1, $conn);
 
     $secondBrewery = Distance::getClosest($lat1st, $lon1st, $items, $decimals = 1, $unit = 'km');
     echo '<br>';
-//var_dump($secondBrewery);
+    //var_dump($secondBrewery);
     $id2 = $secondBrewery['brewery_id'];
     $distance2 = $secondBrewery['distance'];
     $lat2st = $secondBrewery['latitude'];
     $lon2st = $secondBrewery['longitude'];
 
-    foreach ($breweries as $key => $brewery) {
-        $name = $brewery ['name'];
-        if ($id2 == $brewery['id']) {
-            echo 'Second Brewery is ' . $name . '. Distance ' . $distance2 . 'km';
-        }
-    }
+    breweries($breweries, $id2, $number = 'Second', $distance2);
+
+    beersFound($id2, $conn);
 
     $thirdBrewery = Distance::getClosest($lat2st, $lon2st, $items, $decimals = 1, $unit = 'km');
     echo '<br>';
-//var_dump($thirdBrewery);
+    //var_dump($thirdBrewery);
     $id3 = $thirdBrewery['brewery_id'];
     $distance3 = $thirdBrewery['distance'];
     $lat3st = $thirdBrewery['latitude'];
     $lon3st = $thirdBrewery['longitude'];
 
-    foreach ($breweries as $key => $brewery) {
-        $name = $brewery ['name'];
-        if ($id3 == $brewery['id']) {
-            echo 'Third Brewery is ' . $name . '. Distance ' . $distance3 . 'km';
-        }
-    }
+    breweries($breweries, $id3, $number = 'Third', $distance3);
+
+    beersFound($id3, $conn);
 
     $goingHome = Distance::between($lat1, $lon1, $lat3st, $lon3st, $decimals = 1, $unit = 'km');
     $totalDistance = $distance1 + $distance2 + $distance3 + $goingHome;

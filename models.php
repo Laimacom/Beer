@@ -54,3 +54,26 @@ function selectFromBeers($conn)
     return $beers;
 }
 
+function breweries($breweries, $id, $number, $distance)
+{
+    foreach ($breweries as $key => $brewery) {
+        $name = $brewery ['name'];
+        if ($id == $brewery['id']) {
+            echo $number . ' Brewery is ' . $name . '. Distance ' . $distance . 'km';
+        }
+    }
+}
+
+function beersFound($id, $conn)
+{
+    echo '<br>';
+    echo 'Beers found: ';
+    $beers = selectFromBeers($conn);
+    foreach ($beers as $key => $beer) {
+        if ($id == $beer['brewery_id']) {
+            $name = $beer['name'];
+            echo $name . ', ';
+        }
+    }
+}
+
